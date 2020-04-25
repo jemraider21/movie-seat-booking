@@ -4,7 +4,27 @@ const count = document.getElementById("count");
 const total = document.getElementById("total");
 const movieSelect = document.getElementById("movie");
 
+populateUI();
+
 let ticketPrice = +movieSelect.value; // Converting the value into a number data type
+
+// Get data from localstorage and populate UI
+function populateUI(){
+    const selectedSeats = JSON.parse(localStorage.getItem("selectedSeats"));
+    const selectedMovieIndex = localStorage.getItem("selectedMovieIndex");
+
+    if(selectedSeats !== null && selectedSeats.length > 0){
+        seats.forEach((seat, index) => {
+            if(selectedSeats.indexOf(index) > -1){
+                seat.classList.add("selected");
+            }
+        });
+    }
+
+    if(selectedMovieIndex !== null){
+        movieSelect.selectedIndex = selectedMovieIndex;
+    }
+}
 
 // Save selected movie index and price
 function setMovieData(movieIndex, moviePrice){
@@ -43,3 +63,6 @@ container.addEventListener("click",(e) => {
         updateSelectedCount();
     }
 });
+
+// Initial count and total set
+updateSelectedCount();
